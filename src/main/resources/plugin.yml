@@ -1,0 +1,13 @@
+name: VexViewBag
+version: ${project.version}
+main: goblincwl.vexviewbag.VexViewBag
+prefix: VexViewBag
+authors: [GoblinCwl]
+description: 多集成VV背包
+depend: [VexView]
+commands:
+  vvb:
+    description: "打开VexViewBag背包"
+    usage: /vvb
+    permission: "vexviewbag.open"
+    permission-message: "你没有权限."

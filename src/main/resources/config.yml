@@ -1,0 +1,12 @@
+slotClickDebug: false
+messagePrefix: "§b[§aVexViewBag§b]"
+mainGui:
+  url: "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/playerMain_.png"
+  x: -1
+  y: -1
+  w: 1920
+  h: 1080
+  xs: 1920
+  ys: 1080
+  slotLeft: 886
+  slotRight: 542
