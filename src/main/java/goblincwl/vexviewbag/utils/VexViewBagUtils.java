@@ -5,6 +5,8 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+
 /**
  * @author ☪wl
  * @program VexViewBag
@@ -53,6 +55,12 @@ public class VexViewBagUtils {
         } finally {
             player.setOp(isOp);
         }
+    }
+
+    public static ArrayList<String> oneRowAryList(String context) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add(context);
+        return arrayList;
     }
 
 }

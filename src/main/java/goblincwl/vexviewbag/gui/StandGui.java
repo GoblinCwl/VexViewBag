@@ -7,10 +7,7 @@ import lk.vexview.gui.components.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.common.API;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
@@ -49,7 +46,7 @@ public class StandGui extends VexGui {
 
             //JOJO替身
             String standImgUrl = null;
-            String standName;
+            String standName = "§7§l未觉醒替身";
             EntityOneStand playerStand = JojoBAdvLib.getStand(entityPlayer);
             if (playerStand != null) {
                 String standEngName = playerStand.getName();
@@ -109,23 +106,6 @@ public class StandGui extends VexGui {
                         break;
                 }
 
-                //替身名称
-                ArrayList<String> standNameAry = new ArrayList<>();
-                standNameAry.add(standName);
-                int standNameX;
-                switch (standName.length() - 4) {
-                    case 2:
-                        standNameX = 150;
-                        break;
-                    case 5:
-                        standNameX = 115;
-                        break;
-                    default:
-                        standNameX = 128;
-                        break;
-                }
-                this.addComponent(new VexText(standNameX, 13, standNameAry, 1.2));
-
                 if (!"未觉醒替身".equals(standName)) {
                     //替身图片
                     this.addComponent(new VexImage(standImgUrl, 8, 8, 70, 104));
@@ -133,16 +113,11 @@ public class StandGui extends VexGui {
                     //玩家3D渲染图
                     this.addComponent(new VexPlayerDraw(54, 106, 45, player));
 
-                    //替身等级
-                    ArrayList<String> standLevelAry = new ArrayList<>();
-                    standLevelAry.add(standName.substring(0, 2) + "Lv:" + playerStandLvl);
-                    this.addComponent(new VexText(91, 15, standLevelAry, 1));
-
-
                     ArrayList<String> standPowerNumAry;
                     standPowerNumAry = new ArrayList<>();
                     standPowerNumAry.add("§c§l破坏力            " + standStatArray[0]);
                     this.addComponent(new VexText(98, 31, standPowerNumAry, 1));
+                    String finalStandName = standName;
                     this.addComponent(new VexButton(
                             "standMenuPohuai",
                             "+",
@@ -154,7 +129,7 @@ public class StandGui extends VexGui {
                             10,
                             player12 -> {
                                 try {
-                                    standAddPoint(0, player12, standName, "§c§l破坏力");
+                                    standAddPoint(0, player12, finalStandName, "§c§l破坏力");
                                 } catch (NoSuchFieldException | IllegalAccessException e) {
                                     e.printStackTrace();
                                 }
@@ -174,7 +149,7 @@ public class StandGui extends VexGui {
                             10,
                             player12 -> {
                                 try {
-                                    standAddPoint(1, player12, standName, "§b§l速度值");
+                                    standAddPoint(1, player12, finalStandName, "§b§l速度值");
                                 } catch (NoSuchFieldException | IllegalAccessException e) {
                                     e.printStackTrace();
                                 }
@@ -194,7 +169,7 @@ public class StandGui extends VexGui {
                             10,
                             player12 -> {
                                 try {
-                                    standAddPoint(2, player12, standName, "§6§l射程值");
+                                    standAddPoint(2, player12, finalStandName, "§6§l射程值");
                                 } catch (NoSuchFieldException | IllegalAccessException e) {
                                     e.printStackTrace();
                                 }
@@ -214,7 +189,7 @@ public class StandGui extends VexGui {
                             10,
                             player12 -> {
                                 try {
-                                    standAddPoint(3, player12, standName, "§a§l持续力");
+                                    standAddPoint(3, player12, finalStandName, "§a§l持续力");
                                 } catch (NoSuchFieldException | IllegalAccessException e) {
                                     e.printStackTrace();
                                 }
@@ -234,7 +209,7 @@ public class StandGui extends VexGui {
                             10,
                             player12 -> {
                                 try {
-                                    standAddPoint(4, player12, standName, "§d§l精密度");
+                                    standAddPoint(4, player12, finalStandName, "§d§l精密度");
                                 } catch (NoSuchFieldException | IllegalAccessException e) {
                                     e.printStackTrace();
                                 }
@@ -266,7 +241,7 @@ public class StandGui extends VexGui {
                                         jojoCapInstance = getJojoCapInstance((EntityPlayer) (Object) ((CraftPlayer) player).getHandle());
                                         int playerStandLvl1 = jojoCapInstance.getPlayerStandLvl();
                                         if (playerStandLvl1 >= 100) {
-                                            player.sendMessage(VexViewBag.messagePrefix + ChatColor.RED + "你的" + standName + ChatColor.RED + "已经无法再继续提升了！");
+                                            player.sendMessage(VexViewBag.messagePrefix + ChatColor.RED + "你的" + finalStandName + ChatColor.RED + "已经无法再继续提升了！");
 
                                         } else {
                                             PlayerInventory inventory = player.getInventory();
@@ -295,9 +270,28 @@ public class StandGui extends VexGui {
                             });
                     this.addComponent(standLevelUpBtn);
                 }
-
-
             }
+            //替身等级
+            ArrayList<String> standLevelAry = new ArrayList<>();
+            standLevelAry.add(standName.substring(0, 2) + "Lv:" + playerStandLvl);
+            this.addComponent(new VexText(91, 15, standLevelAry, 1));
+
+            //替身名称
+            ArrayList<String> standNameAry = new ArrayList<>();
+            standNameAry.add(standName);
+            int standNameX;
+            switch (standName.length() - 4) {
+                case 2:
+                    standNameX = 150;
+                    break;
+                case 5:
+                    standNameX = 115;
+                    break;
+                default:
+                    standNameX = 128;
+                    break;
+            }
+            this.addComponent(new VexText(standNameX, 13, standNameAry, 1.2));
         }
     }
 

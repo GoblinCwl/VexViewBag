@@ -53,9 +53,9 @@ public class BagGui extends VexInventoryGui {
 
         //玩家头像
         ArrayList<String> playerImgText = new ArrayList<>();
-        playerImgText.add(ChatColor.AQUA + player.getName() + "的头像");
-        playerImgText.add(ChatColor.GRAY + "§o仅读取LittleSkin皮肤站的皮肤");
-        playerImgText.add(ChatColor.GRAY + "§b=========================");
+        playerImgText.add("§a§l" + player.getName() + "§b的头像");
+        playerImgText.add(ChatColor.GRAY + "§o(仅读取LittleSkin皮肤站的皮肤)");
+        playerImgText.add("§b§m§l                           ");
         VexImage playerImg = new VexImage(
                 "https://map.goblincwl.cn/tiles/faces/32x32/" + player.getName() + ".png",
                 818,
