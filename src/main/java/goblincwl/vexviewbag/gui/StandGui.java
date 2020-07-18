@@ -1,6 +1,7 @@
 package goblincwl.vexviewbag.gui;
 
 import goblincwl.vexviewbag.VexViewBag;
+import goblincwl.vexviewbag.utils.VexViewBagUtils;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
@@ -8,8 +9,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import src.jojobadv.Entities.EntityOneStand;
 import src.jojobadv.Events.JojoBAdvPlayerCapabilities;
@@ -233,39 +236,31 @@ public class StandGui extends VexGui {
                             99,
                             78,
                             15,
-                            new ButtonFunction() {
-                                @Override
-                                public void run(Player player) {
-                                    JojoBAdvPlayerCapabilities jojoCapInstance;
-                                    try {
-                                        jojoCapInstance = getJojoCapInstance((EntityPlayer) (Object) ((CraftPlayer) player).getHandle());
-                                        int playerStandLvl1 = jojoCapInstance.getPlayerStandLvl();
-                                        if (playerStandLvl1 >= 100) {
-                                            player.sendMessage(VexViewBag.messagePrefix + ChatColor.RED + "你的" + finalStandName + ChatColor.RED + "已经无法再继续提升了！");
+                            player1 -> {
+                                JojoBAdvPlayerCapabilities jojoCapInstance;
+                                try {
+                                    jojoCapInstance = getJojoCapInstance((EntityPlayer) (Object) ((CraftPlayer) player1).getHandle());
+                                    int playerStandLvl1 = jojoCapInstance.getPlayerStandLvl();
+                                    if (playerStandLvl1 >= 100) {
+                                        player1.sendMessage(VexViewBag.messagePrefix + ChatColor.RED + "你的" + finalStandName + ChatColor.RED + "已经无法再继续提升了！");
 
+                                    } else {
+                                        if (!player1.getInventory().contains(Material.getMaterial("CUSTOMMC_ITEM202"), playerStandLvl1)) {
+                                            player1.sendMessage("§c[§7系统§c]§c你需要§e" + playerStandLvl1 + "个§c精神之瓶才可以升级替身!");
                                         } else {
-                                            PlayerInventory inventory = player.getInventory();
-//                                            inventory.contains(Material.getMaterial(""), 1);
+                                            VexViewBagUtils.consumePlayerItem(player1, new ItemStack(Material.getMaterial("CUSTOMMC_ITEM202")), playerStandLvl1);
+                                            //增加等级+1
+                                            jojoCapInstance.setPlayerStandLvl(playerStandLvl + 1);
+                                            //成长之力+1
+                                            int[] standStatArray1 = jojoCapInstance.getStandStatArray();
+                                            standStatArray1[5] = standStatArray1[5] + 1;
+                                            jojoCapInstance.setStandStatArray(standStatArray1);
+                                            player1.sendMessage("§a[§7系统§a]§6替身等级§a+1§6,§d成长之力§a+1,当前等级§5[§b" + (playerStandLvl1 + 1) + "§5].");
+                                            VexViewAPI.openGui(player1, new StandGui(player1));
                                         }
-                                    } catch (NoSuchFieldException | IllegalAccessException e) {
-                                        e.printStackTrace();
                                     }
-
-//                                    var item = world.createItem("custommc:item202", 0, 1);
-//
-//                                    var playerInv = player.getInventory();
-//                                    var itemCount = playerInv.count(item, true, true);
-//                                    if (itemCount < standLvl) {
-//                                        player.message("§c[§7系统§c]§c你需要§e" + standLvl + "个§c精神之瓶才可以升级替身!");
-//                                    } else {
-//                                        //消耗物品
-//                                        player.removeItem(item, standLvl);
-//                                        //升级替身
-//                                        API.executeCommand(world, "pcmd " + player.getName() + " /jojobadv_ChangeStandLvl 1");
-//                                        player.message("§a[§7系统§a]§6替身等级§a+1§6,§d成长之力§a+1,当前等级§5[§b" + (standLvl + 1) + "§5].");
-//                                        player.playSound("minecraft:entity.experience_orb.pickup", 1, 1);
-//                                        openStandMenu(player, API);
-//                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             });
                     this.addComponent(standLevelUpBtn);

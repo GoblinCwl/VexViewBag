@@ -1,11 +1,13 @@
 package goblincwl.vexviewbag.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author ☪wl
@@ -41,10 +43,27 @@ public class VexViewBagUtils {
         return (net.minecraft.item.ItemStack) (Object) CraftItemStack.asNMSCopy(itemStack);
     }
 
+    /**
+     * 转换net.minecraft.item.ItemStack为BukkitItemStack
+     *
+     * @param itemStack net.minecraft.item.ItemStack
+     * @return org.bukkit.inventory.ItemStack
+     * @create 2020/7/19 1:25
+     * @author ☪wl
+     */
     public static ItemStack convertItemNM(net.minecraft.item.ItemStack itemStack) {
         return CraftItemStack.asBukkitCopy((net.minecraft.server.v1_12_R1.ItemStack) (Object) itemStack);
     }
 
+    /**
+     * 玩家无视权限执行指令
+     *
+     * @param player  玩家对象
+     * @param command 指令(需要带/)
+     * @return void
+     * @create 2020/7/19 1:24
+     * @author ☪wl
+     */
     public static void playerOpCommand(Player player, String command) {
         boolean isOp = player.isOp();
         try {
@@ -57,10 +76,28 @@ public class VexViewBagUtils {
         }
     }
 
-    public static ArrayList<String> oneRowAryList(String context) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(context);
-        return arrayList;
+    /**
+     * 消耗玩家物品
+     *
+     * @param player    玩家
+     * @param itemStack 物品
+     * @param amount    数量
+     * @return boolean
+     * @create 2020/7/19 1:27
+     * @author ☪wl
+     */
+    public static boolean consumePlayerItem(Player player, ItemStack itemStack, Integer amount) {
+        HashMap<Integer, ? extends ItemStack> itemStackMap = player.getInventory().all(itemStack.getType());
+        for (ItemStack nowItemStack : itemStackMap.values()) {
+            if (nowItemStack.getAmount() >= amount) {
+                nowItemStack.setAmount(nowItemStack.getAmount() - amount);
+                return true;
+            } else {
+                amount = amount - nowItemStack.getAmount();
+                nowItemStack.setAmount(0);
+            }
+        }
+        return true;
     }
 
 }

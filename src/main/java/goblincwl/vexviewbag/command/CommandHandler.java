@@ -10,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
@@ -63,13 +62,12 @@ public class CommandHandler implements CommandExecutor {
                             File shopConfigFile = new File(instance.getDataFolder(), "item.yml");
                             YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(shopConfigFile);
                             Set<String> keys = yamlConfiguration.getKeys(false);
-                            yamlConfiguration.set(String.valueOf(keys.size() + 1)+".item", player.getInventory().getItemInMainHand());
+                            yamlConfiguration.set(String.valueOf(keys.size())+".item", player.getInventory().getItemInMainHand());
                             yamlConfiguration.save(shopConfigFile);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                         break;
-
                     default:
                         return false;
                 }

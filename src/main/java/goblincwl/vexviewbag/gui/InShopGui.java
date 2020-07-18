@@ -1,23 +1,24 @@
 package goblincwl.vexviewbag.gui;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.tripleying.qwq.MailBox.API.MailBoxAPI;
+import com.tripleying.qwq.MailBox.Mail.BaseFileMail;
+import com.tripleying.qwq.MailBox.Mail.PlayerFileMail;
 import goblincwl.vexviewbag.VexViewBag;
 import goblincwl.vexviewbag.utils.VexViewBagUtils;
-import lk.vexview.api.VexViewAPI;
-import lk.vexview.gui.OpenedVexGui;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
+import net.milkbowl.vault.economy.Economy;
+import org.black_ixx.playerpoints.PlayerPointsAPI;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.json.simple.JSONObject;
+import org.bukkit.scoreboard.Score;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author ☪wl
@@ -26,7 +27,7 @@ import java.util.Set;
  * @create 2020-07-05 21:09
  */
 public class InShopGui extends VexGui {
-    public InShopGui(String ymlName) {
+    public InShopGui(String ymlName, String emailSender, String emailTitle) {
         super(
                 "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/inShop.png",
                 -1,
@@ -43,9 +44,6 @@ public class InShopGui extends VexGui {
 
         int row = 1;
         int colum = 1;
-
-        VexButton[] buttonArray = new VexButton[keys.size()];
-        VexTextField[] inputArray = new VexTextField[keys.size()];
 
         for (int i = 0; i < keys.size(); i++) {
             //商品
@@ -85,7 +83,6 @@ public class InShopGui extends VexGui {
                     "1"
             );
             this.addComponent(vexInput);
-            inputArray[i] = vexInput;
 
             //货币1
             Map<String, String> moneyTyp1Map = moneyTypePick(money1[0]);
@@ -100,7 +97,7 @@ public class InShopGui extends VexGui {
                         imgY + 6,
                         8,
                         8,
-                        new VexHoverText(VexViewBagUtils.oneRowAryList(money1Hov))
+                        new VexHoverText(Collections.singletonList(money1Hov))
                 ));
                 this.addComponent(new VexText(
                         imgX + 40,
@@ -123,7 +120,7 @@ public class InShopGui extends VexGui {
                         imgY + 16,
                         8,
                         8,
-                        new VexHoverText(VexViewBagUtils.oneRowAryList(money2Hov))
+                        new VexHoverText(Collections.singletonList(money2Hov))
                 ));
                 this.addComponent(new VexText(
                         imgX + 40,
@@ -141,11 +138,33 @@ public class InShopGui extends VexGui {
                     imgX + 22,
                     imgY + 28,
                     33,
-                    12
+                    12,
+                    player -> {
+                        ArrayList<String[]> moneyList = new ArrayList<>(Arrays.asList(money1, money2));
+                        int buyAmount = Integer.parseInt(vexInput.getTypedText());
+                        if (checkMoney(player, moneyList, buyAmount)) {
+                            if (consumeMoney(player, moneyList, buyAmount)) {
+                                player.sendMessage(VexViewBag.messagePrefix + "§a购买成功!");
+                                String emailContext;
+                                if ("0".equals(money2[0])) {
+                                    emailContext = "§e尊敬的§b" + player.getName() + "§e， §a这是购买的物品. §c您一共消费了: " + money1Hov + "：" + Double.parseDouble(money1[1]) * buyAmount + " §e欢迎下次光临";
+                                } else {
+                                    emailContext = "§e尊敬的§b" + player.getName() + "§e， §a这是购买的物品. §c您一共消费了: " + money1Hov + "：" + Double.parseDouble(money1[1]) + " " + money2Hov + "：" + Double.parseDouble(money2[1]) + " §e欢迎下次光临";
+                                }
+                                BaseFileMail mail = MailBoxAPI.createBaseFileMail("player", emailSender, emailTitle, emailContext, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                                itemStack.setAmount(buyAmount);
+                                mail.setItemList(Collections.singletonList(itemStack));
+                                PlayerFileMail playerFileMail = (PlayerFileMail) mail;
+                                playerFileMail.setRecipient(Collections.singletonList(player.getName()));
+                                playerFileMail.Send(Bukkit.getConsoleSender(), null);
+                            }
+                        } else {
+                            player.sendMessage(VexViewBag.messagePrefix + "§c购买失败，余额不足!");
+                        }
+                    }
             );
 
             this.addComponent(vexBuyBtn);
-            buttonArray[i] = vexBuyBtn;
 
             colum++;
             if (colum > 5) {
@@ -155,40 +174,6 @@ public class InShopGui extends VexGui {
         }
 
     }
-
-    //购买物品的方法
-/*    private void buyItem(ItemStack bukkitItem, String money1Type, String money2Type, Double money1, Double money2, Player player, Integer count, String shopMailSender, String shopMailTopic) {
-        OpenedVexGui playerCurrentGui = VexViewAPI.getPlayerCurrentGui(player);
-
-        money1 = money1 * count;
-        money2 = money2 * count;
-        var chekcMoney1 = chekcMoney(money1Type, money1, player, currentGui);
-        if (chekcMoney1 == = 0) {
-            var chekcMoney2 = chekcMoney(money2Type, money2, player, currentGui);
-            if (chekcMoney2 == = 0) {
-                //消耗货币
-                var money1Name = consoumeMoney(money1Type, player, money1, API);
-                var money2Name = consoumeMoney(money2Type, player, money2, API);
-                //发送邮件
-                var itemList = new ArrayList();
-                bukkitItem.setAmount(count);
-                itemList.add(bukkitItem);
-                if (money2Type == 0) {
-                    sendMail('player', shopMailSender, shopMailTopic, '§e尊敬的§b' + player.getName() + '§e， §a这是购买的物品. §c您一共消费了: ' + money1Name + '：' + money1 + ' §e欢迎下次光临', player, itemList);
-                } else {
-                    sendMail('player', shopMailSender, shopMailTopic, '§e尊敬的§b' + player.getName() + '§e， §a这是购买的物品. §c您一共消费了: ' + money1Name + '：' + money1 + ' ' + money2Name + '：' + money2 + ' §e欢迎下次光临', player, itemList);
-                }
-
-                //弹框提示
-                showAlert(currentGui, "§a§l购买成功", "§6§l已发送至邮箱", player);
-            } else {
-                return;
-            }
-        } else {
-            return;
-        }
-    }*/
-
 
     /**
      * 筛选货币类型
@@ -238,5 +223,67 @@ public class InShopGui extends VexGui {
         dataMap.put("moneyHov", moneyHov);
 
         return dataMap;
+    }
+
+    private Boolean checkMoney(Player player, List<String[]> moneyList, Integer amount) {
+        for (String[] money : moneyList) {
+            double moneyCount = Double.parseDouble(money[1]) * amount;
+            switch (money[0]) {
+                case "1":
+                    Economy economy = VexViewBag.economy;
+                    double balance = economy.getBalance(player);
+                    if (balance < moneyCount) {
+                        return false;
+                    }
+                    break;
+                case "2":
+                    PlayerPointsAPI playerPointsAPI = VexViewBag.playerPointsAPI;
+                    int points = playerPointsAPI.look(player.getUniqueId());
+                    if (points < moneyCount) {
+                        return false;
+                    }
+                    break;
+                case "3":
+                    int score = player.getScoreboard().getObjective("signPoint").getScore(player.getName()).getScore();
+                    if (score < moneyCount) {
+                        return false;
+                    }
+                    break;
+                case "4":
+                    if (!player.getInventory().contains(Material.getMaterial("CUSTOMMC_ITEM9"), (int) moneyCount)) {
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return true;
+    }
+
+    private Boolean consumeMoney(Player player, List<String[]> moneyList, Integer amount) {
+        for (String[] money : moneyList) {
+            double moneyCount = Double.parseDouble(money[1]) * amount;
+            switch (money[0]) {
+                case "1":
+                    Economy economy = VexViewBag.economy;
+                    economy.withdrawPlayer(player, moneyCount);
+                    break;
+                case "2":
+                    PlayerPointsAPI playerPointsAPI = VexViewBag.playerPointsAPI;
+                    playerPointsAPI.take(player.getUniqueId(), (int) moneyCount);
+                    break;
+                case "3":
+                    Score signPoint = player.getScoreboard().getObjective("signPoint").getScore(player.getName());
+                    signPoint.setScore(signPoint.getScore() - (int) moneyCount);
+                    break;
+                case "4":
+                    VexViewBagUtils.consumePlayerItem(player, new ItemStack(Material.getMaterial("CUSTOMMC_ITEM9")), (int) moneyCount);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return true;
     }
 }
