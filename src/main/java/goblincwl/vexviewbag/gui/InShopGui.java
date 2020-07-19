@@ -4,7 +4,7 @@ import com.tripleying.qwq.MailBox.API.MailBoxAPI;
 import com.tripleying.qwq.MailBox.Mail.BaseFileMail;
 import com.tripleying.qwq.MailBox.Mail.PlayerFileMail;
 import goblincwl.vexviewbag.VexViewBag;
-import goblincwl.vexviewbag.utils.VexViewBagUtils;
+import goblincwl.vexviewbag.VexViewBagUtils;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
 import net.milkbowl.vault.economy.Economy;
@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Score;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -36,10 +37,7 @@ public class InShopGui extends VexGui {
                 203
         );
 
-        VexViewBag instance = VexViewBag.getInstance();
-
-        File shopConfigFile = new File(instance.getDataFolder(), ymlName + ".yml");
-        YamlConfiguration shopConfig = YamlConfiguration.loadConfiguration(shopConfigFile);
+        YamlConfiguration shopConfig = (YamlConfiguration) VexViewBag.configurationMap.get(ymlName + ".yml");
         Set<String> keys = shopConfig.getKeys(false);
 
         int row = 1;
@@ -244,9 +242,19 @@ public class InShopGui extends VexGui {
                     }
                     break;
                 case "3":
-                    int score = player.getScoreboard().getObjective("signPoint").getScore(player.getName()).getScore();
-                    if (score < moneyCount) {
-                        return false;
+                    try {
+                        //玩家数据文件
+                        File file = new File(VexViewBag.vexViewBag.getDataFolder(), "/playerData/" + player.getName() + ".yml");
+                        if (!file.exists()) {
+                            file.createNewFile();
+                        }
+                        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+                        long activePoint = configuration.getLong("active.activePoint");
+                        if (activePoint < moneyCount) {
+                            return false;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     break;
                 case "4":
@@ -274,8 +282,19 @@ public class InShopGui extends VexGui {
                     playerPointsAPI.take(player.getUniqueId(), (int) moneyCount);
                     break;
                 case "3":
-                    Score signPoint = player.getScoreboard().getObjective("signPoint").getScore(player.getName());
-                    signPoint.setScore(signPoint.getScore() - (int) moneyCount);
+                    //玩家数据文件
+                    try {
+                        File file = new File(VexViewBag.vexViewBag.getDataFolder(), "/playerData/" + player.getName() + ".yml");
+                        if (!file.exists()) {
+                            file.createNewFile();
+                        }
+                        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+                        long activePoint = configuration.getLong("active.activePoint");
+                        configuration.set("active.activePoint", activePoint - moneyCount);
+                        configuration.save(file);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case "4":
                     VexViewBagUtils.consumePlayerItem(player, new ItemStack(Material.getMaterial("CUSTOMMC_ITEM9")), (int) moneyCount);

@@ -1,13 +1,18 @@
-package goblincwl.vexviewbag.utils;
+package goblincwl.vexviewbag;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import noppes.npcs.api.entity.IPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ☪wl
@@ -98,6 +103,45 @@ public class VexViewBagUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 发送特殊消息
+     *
+     * @param player  玩家
+     * @param title   标题
+     * @param message 内容
+     * @param type    类型(0,1,2)
+     * @return void
+     * @create 2020/7/19 15:18
+     * @author ☪wl
+     */
+    public static void sendMcMessage(Player player, String title, String message, Integer type) {
+        if (player != null) {
+            EntityPlayer entityPlayer = (EntityPlayer) (Object) ((CraftPlayer) player).getHandle();
+            IPlayer<EntityPlayerMP> iPlayer = (IPlayer<EntityPlayerMP>) VexViewBag.npcAPI.getIEntity(entityPlayer);
+            iPlayer.sendNotification(title, message, type);
+        }
+    }
+
+    /**
+     * 加载配置文件到map
+     *
+     * @return void
+     * @create 2020/7/19 17:47
+     * @author ☪wl
+     */
+    public static Map<String, Object> loadAllConfig() {
+        Map<String, Object> configurationMap = new HashMap<>();
+        File fileDirectory = new File(VexViewBag.vexViewBag.getDataFolder().toURI());
+        if (fileDirectory.exists()) {
+            for (File file : fileDirectory.listFiles()) {
+                if (!file.isDirectory()) {
+                    configurationMap.put(file.getName(), YamlConfiguration.loadConfiguration(file));
+                }
+            }
+        }
+        return configurationMap;
     }
 
 }

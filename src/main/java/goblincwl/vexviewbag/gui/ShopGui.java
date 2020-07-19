@@ -1,13 +1,12 @@
 package goblincwl.vexviewbag.gui;
 
-import goblincwl.vexviewbag.utils.VexViewBagUtils;
+import goblincwl.vexviewbag.VexViewBagUtils;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.VexButton;
 import lk.vexview.gui.components.VexText;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**

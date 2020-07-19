@@ -1,7 +1,7 @@
 package goblincwl.vexviewbag.gui;
 
 import goblincwl.vexviewbag.VexViewBag;
-import goblincwl.vexviewbag.utils.VexViewBagUtils;
+import goblincwl.vexviewbag.VexViewBagUtils;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
@@ -13,7 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import src.jojobadv.Entities.EntityOneStand;
 import src.jojobadv.Events.JojoBAdvPlayerCapabilities;
 import src.jojobadv.ModBase.JojoBAdvLib;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
  */
 public class StandGui extends VexGui {
 
-    public StandGui(Player player) throws NoSuchFieldException, IllegalAccessException {
+    public StandGui(Player player) {
         super(
                 "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standGui1.png",
                 -1,
@@ -41,7 +40,12 @@ public class StandGui extends VexGui {
 
         EntityPlayer entityPlayer = (EntityPlayer) (Object) ((CraftPlayer) player).getHandle();
         //获取玩家替身capsnbt数据
-        JojoBAdvPlayerCapabilities jojoCap = getJojoCapInstance(entityPlayer);
+        JojoBAdvPlayerCapabilities jojoCap;
+        try {
+            jojoCap = getJojoCapInstance(entityPlayer);
+        } catch (Exception e) {
+            jojoCap = null;
+        }
         if (jojoCap != null) {
             //替身属性值
             int[] standStatArray = jojoCap.getStandStatArray();

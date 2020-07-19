@@ -1,11 +1,9 @@
-package goblincwl.vexviewbag.listener;
+package goblincwl.vexviewbag;
 
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
-import goblincwl.vexviewbag.VexViewBag;
 import goblincwl.vexviewbag.gui.BagGui;
-import goblincwl.vexviewbag.utils.VexViewBagUtils;
 import lain.mods.cos.api.CosArmorAPI;
 import lain.mods.cos.api.inventory.CAStacksBase;
 import lk.vexview.api.VexViewAPI;
@@ -28,12 +26,12 @@ import org.bukkit.inventory.PlayerInventory;
  * @description VexView事件监听类
  * @create 2020-07-01 16:48
  */
-public final class VexViewEventListener implements Listener {
+public final class VexViewBagEventListener implements Listener {
 
     int bb = 1;
 
     @EventHandler
-    public void onKey(KeyBoardPressEvent event) throws IllegalAccessException, NoSuchFieldException {
+    public void onKey(KeyBoardPressEvent event) {
         //按的是E(18) R(19)，并且有GUI打开，并且按键结束（放开，非按住）
         if (event.getKey() == 19 && event.getEventKeyState()) {
             if (event.getType().toString().equals("GUI")) {

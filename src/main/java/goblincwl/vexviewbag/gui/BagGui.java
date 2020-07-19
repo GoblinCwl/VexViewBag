@@ -4,24 +4,23 @@ import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
 import goblincwl.vexviewbag.VexViewBag;
-import goblincwl.vexviewbag.utils.VexViewBagUtils;
+import goblincwl.vexviewbag.VexViewBagUtils;
 import lain.mods.cos.api.CosArmorAPI;
 import lain.mods.cos.api.inventory.CAStacksBase;
+import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.VexInventoryGui;
 import lk.vexview.gui.components.*;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.entity.player.EntityPlayer;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 import src.jojobadv.Entities.EntityOneStand;
 import src.jojobadv.ModBase.JojoBAdvLib;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Collections;
 
 /**
  * @author ☪wl
@@ -66,44 +65,175 @@ public class BagGui extends VexInventoryGui {
         );
         this.addComponent(playerImg);
 
-//        仪表盘按钮
-        File fileLeft = new File(instance.getDataFolder(), "button.yml");
-        YamlConfiguration buttonLeftConfig = YamlConfiguration.loadConfiguration(fileLeft);
-        Set<String> buttonLeftKeys = buttonLeftConfig.getKeys(false);
-        for (String key : buttonLeftKeys) {
-            //要执行的指令
-            String command = buttonLeftConfig.getString(key + ".command");
-            //替换玩家符
-            command = command.replaceAll("%player%", player.getName());
-            String finalCommand = command;
-            ArrayList<String> btnText = new ArrayList<>();
-            btnText.add(buttonLeftConfig.getString(key + ".lore"));
-            VexButton btn = new VexButton(
-                    key,
-                    buttonLeftConfig.getString(key + ".name"),
-                    buttonLeftConfig.getString(key + ".url1"),
-                    buttonLeftConfig.getString(key + ".url2"),
-                    buttonLeftConfig.getInt(key + ".x"),
-                    buttonLeftConfig.getInt(key + ".y"),
-                    buttonLeftConfig.getInt(key + ".w"),
-                    buttonLeftConfig.getInt(key + ".h"),
-                    buttonLeftConfig.getBoolean(key + ".opCommand")
-                            ?
-                            (ButtonFunction) inPlayer -> {
-                                if (StringUtils.isNotEmpty(finalCommand)) {
-                                    VexViewBagUtils.playerOpCommand(inPlayer, finalCommand);
-                                }
-                            }
-                            :
-                            (ButtonFunction) inPlayer -> {
-                                if (StringUtils.isNotEmpty(finalCommand)) {
-                                    inPlayer.chat("/" + finalCommand);
-                                }
-                            },
-                    new VexHoverText(btnText)
-            );
-            this.addComponent(btn);
-        }
+        //左侧按钮
+        //会员
+        this.addComponent(new VexButton(
+                "vipBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/vipBtn_None.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/vipBtn_None.png",
+                812,
+                528,
+                20,
+                20,
+                inPlayer -> {
+
+                },
+                new VexHoverText(Collections.singletonList("§c非会员"))
+        ));
+
+        //称号
+        this.addComponent(new VexButton(
+                "chBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/chBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/chBtn_.png",
+                832,
+                528,
+                20,
+                20,
+                inPlayer -> {
+                    VexViewBagUtils.playerOpCommand(inPlayer, "ch open");
+                },
+                new VexHoverText(Collections.singletonList("§a称号"))
+        ));
+
+        //替身
+        this.addComponent(new VexButton(
+                "standBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/standBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/standBtn_.png",
+                852,
+                528,
+                20,
+                20,
+                inPlayer -> {
+                    VexViewAPI.openGui(player, new StandGui(inPlayer));
+                },
+                new VexHoverText(Collections.singletonList("§a替身"))
+        ));
+
+        //活跃
+        this.addComponent(new VexButton(
+                "activeBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/infoBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/infoBtn_.png",
+                812,
+                548,
+                20,
+                20,
+                inPlayer -> {
+
+                },
+                new VexHoverText(Collections.singletonList("§6活跃"))
+        ));
+        //任务
+        this.addComponent(new VexButton(
+                "taskBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/signBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/signBtn_.png",
+                832,
+                548,
+                20,
+                20,
+                inPlayer -> {
+                },
+                new VexHoverText(Collections.singletonList("§e任务"))
+        ));
+        //邮箱
+        this.addComponent(new VexButton(
+                "mailBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/mailBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/serverMain/mailBtn_.png",
+                852,
+                548,
+                20,
+                20,
+                inPlayer -> {
+                    inPlayer.chat("/mb");
+                },
+                new VexHoverText(Collections.singletonList("§b邮箱"))
+        ));
+
+        //右侧按钮
+        //传送
+        this.addComponent(new VexButton(
+                "tpBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/tpBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/tpBtn_.png",
+                1048,
+                540,
+                20,
+                20,
+                inPlayer -> {
+                    VexViewBagUtils.playerOpCommand(inPlayer, "opengui " + player.getName() + " main-gui/tpMain-gui");
+                },
+                new VexHoverText(Collections.singletonList("§d传送"))
+        ));
+        //商店
+        this.addComponent(new VexButton(
+                "shopBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/shopBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/shopBtn_.png",
+                1068,
+                540,
+                20,
+                20,
+                inPlayer -> {
+                    VexViewAPI.openGui(inPlayer, new ShopGui());
+                },
+                new VexHoverText(Collections.singletonList("§b商店"))
+        ));
+        //活动
+        this.addComponent(new VexButton(
+                "partyBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/partyBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/partyBtn_.png",
+                1088,
+                540,
+                20,
+                20,
+                inPlayer -> {
+                },
+                new VexHoverText(Collections.singletonList("§e活动"))
+        ));
+        //工作台
+        this.addComponent(new VexButton(
+                "craftBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/craftBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/craftBtn_.png",
+                1048,
+                560,
+                20,
+                20,
+                inPlayer -> {
+                    VexViewBagUtils.playerOpCommand(inPlayer, "craft");
+                },
+                new VexHoverText(Collections.singletonList("§6工作台"))
+        ));
+        //末影箱
+        this.addComponent(new VexButton(
+                "endChestBtn",
+                "",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/enderChestBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/playerMain/enderChestBtn_.png",
+                1068,
+                560,
+                20,
+                20,
+                inPlayer -> {
+                    inPlayer.chat("/ec open");
+                },
+                new VexHoverText(Collections.singletonList("§9末影箱"))
+        ));
 
         //原版背包
         PlayerInventory playerInventory = player.getInventory();

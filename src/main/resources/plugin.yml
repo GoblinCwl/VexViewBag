@@ -4,7 +4,7 @@ main: goblincwl.vexviewbag.VexViewBag
 prefix: VexViewBag
 authors: [GoblinCwl]
 description: 多集成VV背包
-depend: [VexView]
+depend: [VexView,Vault,PlayerPoints,PlaceholderAPI,MailBox]
 commands:
   vvb:
     description: "打开VexViewBag背包"

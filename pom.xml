@@ -150,5 +150,20 @@
 			<systemPath>${project.basedir}/lib/MailBox-v2.4.3.jar</systemPath>
 		</dependency>
 
+		<dependency>
+			<groupId>noppes.npcs</groupId>
+			<artifactId>CustomNPCs</artifactId>
+			<version>08Jan20snapshot</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/S-CustomNPCs_1.12.2-08Jan20snapshot.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>me.clip.placeholderapi</groupId>
+			<artifactId>PlaceholderAPIPlugin</artifactId>
+			<version>08Jan20snapshot</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/PlaceholderAPI-2.10.5.jar</systemPath>
+		</dependency>
 	</dependencies>
 </project>
