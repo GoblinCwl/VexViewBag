@@ -111,3 +111,6 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+#插件配置文件
+src/main/resources/config.yml
