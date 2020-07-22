@@ -10,3 +10,9 @@ mainGui:
   ys: 1080
   slotLeft: 886
   slotRight: 542
+mysql:
+  ip: "web.goblincwl.cn"
+  port: "35075"
+  dataBase: "mc_base"
+  userName: "root"
+  password: "Qwaszx123"

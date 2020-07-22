@@ -1,5 +1,6 @@
 package goblincwl.vexviewbag;
 
+import goblincwl.vexviewbag.mysql.MySqlManager;
 import lk.vexview.api.VexViewAPI;
 import net.milkbowl.vault.economy.Economy;
 import noppes.npcs.api.NpcAPI;
@@ -10,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.Map;
 
 
@@ -20,6 +22,7 @@ public final class VexViewBag extends JavaPlugin {
     public static PlayerPointsAPI playerPointsAPI;
     public static String messagePrefix;
     public static NpcAPI npcAPI;
+    public static MySqlManager mySqlManager;
 
     public static Map<String, Object> configurationMap;
 
@@ -66,6 +69,9 @@ public final class VexViewBag extends JavaPlugin {
             saveDefaultConfig();
             //加载其他配置文件
             configurationMap = VexViewBagUtils.loadAllConfig();
+            //mysql注入
+            mySqlManager = MySqlManager.get();
+            mySqlManager.enableMySql();
 
             //消息提示头
             messagePrefix = getConfig().getString("messagePrefix");

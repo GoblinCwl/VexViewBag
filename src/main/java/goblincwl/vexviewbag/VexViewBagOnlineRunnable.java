@@ -1,13 +1,10 @@
 package goblincwl.vexviewbag;
 
-import noppes.npcs.api.NpcAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -26,22 +23,20 @@ public class VexViewBagOnlineRunnable extends BukkitRunnable {
         Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
         for (Player player : onlinePlayers) {
             try {
-                //玩家数据文件
-                File file = new File(vexViewBag.getDataFolder(), "/playerData/" + player.getName() + ".yml");
-                if (!file.exists()) {
-                    file.createNewFile();
+                //玩家数据
+                VexViewBagPlayer vexViewBagPlayer = VexViewBag.mySqlManager.selectData(player.getUniqueId().toString());
+                if (vexViewBagPlayer == null) {
+                    vexViewBagPlayer = VexViewBag.mySqlManager.insertData(player.getUniqueId().toString());
                 }
                 //每分钟统计在线时间
-                YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-
                 //统计日期
-                String dataDate = configuration.getString("onlineTime.dataDate");
+                String dataDate = vexViewBagPlayer.getOnlineDate();
                 String now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                 if (now.equals(dataDate)) {
                     //当前已在线时间
-                    long nowTime = configuration.getLong("onlineTime.todayTime") + 1;
-                    configuration.set("onlineTime.todayTime", nowTime);
-                    configuration.save(file);
+                    long nowTime = vexViewBagPlayer.getOnlineTime() + 1;
+                    vexViewBagPlayer.setOnlineTime(nowTime);
+
                     switch ((int) nowTime) {
                         case 30:
                             VexViewBagUtils.sendMcMessage(player, "已在线§b30§r分钟", "§a菜单->活跃领取奖励！  §7§o(下一档：§a60§r)", 2);
@@ -72,10 +67,12 @@ public class VexViewBagOnlineRunnable extends BukkitRunnable {
                             break;
                     }
                 } else {
-                    configuration.set("onlineTime.dataDate", now);
-                    configuration.set("onlineTime.todayTime", 1);
-                    configuration.save(file);
+                    vexViewBagPlayer.setOnlineDate(now);
+                    vexViewBagPlayer.setOnlineTime(1L);
                 }
+
+                //提交数据库
+                VexViewBag.mySqlManager.updateOnline(vexViewBagPlayer.getPlayerUUID(), vexViewBagPlayer.getOnlineDate(), vexViewBagPlayer.getOnlineTime());
 
             } catch (Exception e) {
                 player.sendMessage(VexViewBag.messagePrefix + "§c您的在线时间统计异常，请联系管理员.");

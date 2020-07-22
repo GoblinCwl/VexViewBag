@@ -44,21 +44,20 @@ public class VexViewBagPlaceHoldedr extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
         try {
-            //玩家数据文件
-            File file = new File(this.plugin.getDataFolder(), "/playerData/" + player.getName() + ".yml");
-            if (!file.exists()) {
-                file.createNewFile();
+            //玩家数据
+            VexViewBagPlayer vexViewBagPlayer = VexViewBag.mySqlManager.selectData(player.getUniqueId().toString());
+            if (vexViewBagPlayer == null) {
+                vexViewBagPlayer = VexViewBag.mySqlManager.insertData(player.getUniqueId().toString());
             }
-            YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
             switch (identifier) {
                 case "activePoint":
-                    return String.valueOf(configuration.getLong("active.activePoint"));
+                    return String.valueOf(vexViewBagPlayer.getActivePoint());
                 case "onlineTime":
-                    return String.valueOf(configuration.getLong("onlineTime.todayTime"));
+                    return String.valueOf(vexViewBagPlayer.getOnlineTime());
                 default:
                     return null;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             return null;
         }
     }

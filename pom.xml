@@ -56,7 +56,7 @@
 							<tasks>
 								<copy todir="F:/IntelliJIdeaProject/MinecrafProject/TestServer/plugins">
 									<fileset dir="${project.build.directory}">
-										<include name="${project.artifactId}-${project.version}.jar" />
+										<include name="${project.artifactId}-${project.version}.jar"/>
 									</fileset>
 								</copy>
 							</tasks>
@@ -78,6 +78,13 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>lk.vexview</groupId>
 			<artifactId>VexView</artifactId>

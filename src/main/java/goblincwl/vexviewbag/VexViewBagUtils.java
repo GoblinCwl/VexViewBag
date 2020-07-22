@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author ☪wl
@@ -135,7 +136,7 @@ public class VexViewBagUtils {
         Map<String, Object> configurationMap = new HashMap<>();
         File fileDirectory = new File(VexViewBag.vexViewBag.getDataFolder().toURI());
         if (fileDirectory.exists()) {
-            for (File file : fileDirectory.listFiles()) {
+            for (File file : Objects.requireNonNull(fileDirectory.listFiles())) {
                 if (!file.isDirectory()) {
                     configurationMap.put(file.getName(), YamlConfiguration.loadConfiguration(file));
                 }

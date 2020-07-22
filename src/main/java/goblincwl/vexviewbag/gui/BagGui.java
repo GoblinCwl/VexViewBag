@@ -109,7 +109,7 @@ public class BagGui extends VexInventoryGui {
                 20,
                 20,
                 inPlayer -> {
-                    VexViewAPI.openGui(player, new StandGui(inPlayer));
+                    VexViewAPI.openGui(inPlayer, new StandGui(inPlayer));
                 },
                 new VexHoverText(Collections.singletonList("§a替身"))
         ));

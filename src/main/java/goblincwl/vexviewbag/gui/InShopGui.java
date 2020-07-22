@@ -4,6 +4,7 @@ import com.tripleying.qwq.MailBox.API.MailBoxAPI;
 import com.tripleying.qwq.MailBox.Mail.BaseFileMail;
 import com.tripleying.qwq.MailBox.Mail.PlayerFileMail;
 import goblincwl.vexviewbag.VexViewBag;
+import goblincwl.vexviewbag.VexViewBagPlayer;
 import goblincwl.vexviewbag.VexViewBagUtils;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
@@ -244,12 +245,12 @@ public class InShopGui extends VexGui {
                 case "3":
                     try {
                         //玩家数据文件
-                        File file = new File(VexViewBag.vexViewBag.getDataFolder(), "/playerData/" + player.getName() + ".yml");
-                        if (!file.exists()) {
-                            file.createNewFile();
+                        //玩家数据
+                        VexViewBagPlayer vexViewBagPlayer = VexViewBag.mySqlManager.selectData(player.getUniqueId().toString());
+                        if (vexViewBagPlayer == null) {
+                            vexViewBagPlayer = VexViewBag.mySqlManager.insertData(player.getUniqueId().toString());
                         }
-                        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-                        long activePoint = configuration.getLong("active.activePoint");
+                        long activePoint = vexViewBagPlayer.getActivePoint();
                         if (activePoint < moneyCount) {
                             return false;
                         }
@@ -284,14 +285,14 @@ public class InShopGui extends VexGui {
                 case "3":
                     //玩家数据文件
                     try {
-                        File file = new File(VexViewBag.vexViewBag.getDataFolder(), "/playerData/" + player.getName() + ".yml");
-                        if (!file.exists()) {
-                            file.createNewFile();
+                        //玩家数据
+                        VexViewBagPlayer vexViewBagPlayer = VexViewBag.mySqlManager.selectData(player.getUniqueId().toString());
+                        if (vexViewBagPlayer == null) {
+                            vexViewBagPlayer = VexViewBag.mySqlManager.insertData(player.getUniqueId().toString());
                         }
-                        YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-                        long activePoint = configuration.getLong("active.activePoint");
-                        configuration.set("active.activePoint", activePoint - moneyCount);
-                        configuration.save(file);
+                        long activePoint = vexViewBagPlayer.getActivePoint();
+                        vexViewBagPlayer.setActivePoint((long) (activePoint - moneyCount));
+                        VexViewBag.mySqlManager.updateActivePoint(vexViewBagPlayer.getPlayerUUID(), vexViewBagPlayer.getActivePoint());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

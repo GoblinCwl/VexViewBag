@@ -1,11 +1,10 @@
 package goblincwl.vexviewbag;
 
-import goblincwl.vexviewbag.VexViewBag;
 import goblincwl.vexviewbag.gui.BagGui;
 import goblincwl.vexviewbag.gui.ShopGui;
 import goblincwl.vexviewbag.gui.StandGui;
 import lk.vexview.api.VexViewAPI;
-import org.bukkit.Sound;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,23 +34,7 @@ public class VexViewBagCommandHandler implements CommandExecutor {
                 if (!(sender instanceof Player)) {
                     switch (args[0]) {
                         case "addActivePoint":
-                            if (args.length > 2) {
-                                //玩家数据文件
-                                try {
-                                    File file = new File(vexViewBag.getDataFolder(), "/playerData/" + args[1] + ".yml");
-                                    if (!file.exists()) {
-                                        file.createNewFile();
-                                    }
-                                    YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-                                    configuration.set("active.activePoint", configuration.getLong("active.activePoint") + Integer.parseInt(args[2]));
-                                    configuration.save(file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                return false;
-                            }
-                            break;
+                            return addActivePoint(args, sender);
                         default:
                             break;
                     }
@@ -89,23 +72,7 @@ public class VexViewBagCommandHandler implements CommandExecutor {
                             }
                             break;
                         case "addActivePoint":
-                            if (args.length > 2) {
-                                //玩家数据文件
-                                try {
-                                    File file = new File(vexViewBag.getDataFolder(), "/playerData/" + args[1] + ".yml");
-                                    if (!file.exists()) {
-                                        file.createNewFile();
-                                    }
-                                    YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
-                                    configuration.set("active.activePoint", configuration.getLong("active.activePoint") + Integer.parseInt(args[2]));
-                                    configuration.save(file);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                return false;
-                            }
-                            break;
+                            return addActivePoint(args, sender);
                         default:
                             return false;
                     }
@@ -114,5 +81,36 @@ public class VexViewBagCommandHandler implements CommandExecutor {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 添加活跃值
+     *
+     * @param args   指令参数
+     * @param sender 指令发送者
+     * @return boolean
+     * @create 2020/7/22 15:32
+     * @author ☪wl
+     */
+    private boolean addActivePoint(String[] args, CommandSender sender) {
+        if (args.length > 2) {
+            String playerName = args[1];
+            String point = args[2];
+            try {
+                Player targetPlayer = Bukkit.getPlayer(playerName);
+                VexViewBagPlayer vexViewBagPlayer = VexViewBag.mySqlManager.selectData(targetPlayer.getUniqueId().toString());
+                if (vexViewBagPlayer == null) {
+                    sender.sendMessage(VexViewBag.messagePrefix + "玩家" + playerName + "不存在");
+                    return false;
+                }
+                VexViewBag.mySqlManager.updateActivePoint(targetPlayer.getUniqueId().toString(), vexViewBagPlayer.getActivePoint() + Long.parseLong(point));
+                sender.sendMessage(VexViewBag.messagePrefix + "玩家" + playerName + "活跃值+" + point);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }
