@@ -11,8 +11,8 @@ mainGui:
   slotLeft: 886
   slotRight: 542
 mysql:
-  ip: "web.goblincwl.cn"
-  port: "35075"
-  dataBase: "mc_base"
+  ip: "localhost"
+  port: "3306"
+  dataBase: "database"
   userName: "root"
-  password: "Qwaszx123"
+  password: "root"
