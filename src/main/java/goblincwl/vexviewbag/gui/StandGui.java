@@ -30,7 +30,7 @@ public class StandGui extends VexGui {
 
     public StandGui(Player player) {
         super(
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standGui1.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/gui/standGui.png",
                 -1,
                 -1,
                 201,
@@ -60,53 +60,43 @@ public class StandGui extends VexGui {
                 switch (standEngName) {
                     case "Silver Chariot":
                     case "银色战车":
-                        standName = "§7§l银色战车";
-                        standImgUrl = "[local]Custom/PlayerInfo/银色战车.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Silver_Chariot.png";
                         break;
                     case "Magician's Red":
                     case "魔术师之红":
-                        standName = "§c§l红色魔术师";
-                        standImgUrl = "[local]Custom/PlayerInfo/红色魔术师.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Magician's_Red.png";
                         break;
                     case "Star Platinum":
                     case "白金之星":
-                        standName = "§b§l白金之星";
-                        standImgUrl = "[local]Custom/PlayerInfo/白金之星.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Star_Platinum.png";
                         break;
                     case "The World":
                     case "世界":
-                        standName = "§e§l世界";
-                        standImgUrl = "[local]Custom/PlayerInfo/世界.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/The_World.png";
                         break;
                     case "Gold Experience":
                     case "黄金体验":
-                        standName = "§6§l黄金体验";
-                        standImgUrl = "[local]Custom/PlayerInfo/黄金体验.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Gold_Experience.png";
                         break;
                     case "Crazy Diamond":
                     case "疯狂钻石":
-                        standName = "§d§l疯狂钻石";
-                        standImgUrl = "[local]Custom/PlayerInfo/疯狂钻石.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Crazy_Diamond.png";
                         break;
                     case "Echoes Egg":
                     case "回音之卵":
-                        standName = "§a§l回音之卵";
-                        standImgUrl = "[local]Custom/PlayerInfo/回音之卵.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Echoes_Egg.png";
                         break;
                     case "Echoes Act1":
                     case "回音Act1":
-                        standName = "§a§l回音Act1";
-                        standImgUrl = "[local]Custom/PlayerInfo/回音Act1.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Echoes_Act1.png";
                         break;
                     case "Killer Queen":
                     case "杀手皇后":
-                        standName = "§d§l杀手皇后";
-                        standImgUrl = "[local]Custom/PlayerInfo/杀手皇后.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/Killer_Queen.png";
                         break;
                     case "The Hand":
                     case "轰炸空间":
-                        standName = "§1§l轰炸空间";
-                        standImgUrl = "[local]Custom/PlayerInfo/轰炸空间.png";
+                        standImgUrl = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standPng/The_Hand.png";
                         break;
                     default:
                         standName = "未觉醒替身";
@@ -128,8 +118,8 @@ public class StandGui extends VexGui {
                     this.addComponent(new VexButton(
                             "standMenuPohuai",
                             "+",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn_.png",
                             86,
                             31,
                             10,
@@ -148,8 +138,8 @@ public class StandGui extends VexGui {
                     this.addComponent(new VexButton(
                             "standMenuSudu",
                             "+",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn_.png",
                             86,
                             44,
                             10,
@@ -168,8 +158,8 @@ public class StandGui extends VexGui {
                     this.addComponent(new VexButton(
                             "standMenuShecheng",
                             "+",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn_.png",
                             86,
                             57,
                             10,
@@ -188,8 +178,8 @@ public class StandGui extends VexGui {
                     this.addComponent(new VexButton(
                             "standMenuChixu",
                             "+",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn_.png",
                             86,
                             70,
                             10,
@@ -208,8 +198,8 @@ public class StandGui extends VexGui {
                     this.addComponent(new VexButton(
                             "standMenuJingmi",
                             "+",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standAddPointBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standAddPointBtn_.png",
                             86,
                             83,
                             10,
@@ -234,8 +224,8 @@ public class StandGui extends VexGui {
                     VexButton standLevelUpBtn = new VexButton(
                             "standMenuLevelUp",
                             "§9§l升级",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standLevelUpBtn.png",
-                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/standMain/standLevelUpBtn_.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standLevelUpBtn.png",
+                            "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/standLevelUpBtn_.png",
                             114,
                             99,
                             78,

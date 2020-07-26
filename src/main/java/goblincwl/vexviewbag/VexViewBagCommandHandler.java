@@ -1,6 +1,5 @@
 package goblincwl.vexviewbag;
 
-import goblincwl.vexviewbag.gui.BagGui;
 import goblincwl.vexviewbag.gui.ShopGui;
 import goblincwl.vexviewbag.gui.StandGui;
 import lk.vexview.api.VexViewAPI;
@@ -41,11 +40,6 @@ public class VexViewBagCommandHandler implements CommandExecutor {
                 } else {
                     Player player = (Player) sender;
                     switch (args[0]) {
-                        case "open":
-                            //打开背包
-
-                            VexViewAPI.openGui(player, new BagGui(player));
-                            break;
                         case "stand":
                             //替身
                             VexViewAPI.openGui(player, new StandGui(player));

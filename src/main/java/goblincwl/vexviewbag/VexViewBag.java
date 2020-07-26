@@ -1,7 +1,10 @@
 package goblincwl.vexviewbag;
 
 import goblincwl.vexviewbag.mysql.MySqlManager;
+import goblincwl.vexviewbag.page.BagPage;
 import lk.vexview.api.VexViewAPI;
+import lk.vexview.gui.components.VexText;
+import lk.vexview.newinv.VexPage;
 import net.milkbowl.vault.economy.Economy;
 import noppes.npcs.api.NpcAPI;
 import org.black_ixx.playerpoints.PlayerPoints;
@@ -12,6 +15,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 
@@ -79,6 +84,9 @@ public final class VexViewBag extends JavaPlugin {
             //开始记录在线时间
             VexViewBagOnlineRunnable vexViewBagOnlineRunnable = new VexViewBagOnlineRunnable();
             vexViewBagOnlineRunnable.runTaskTimer(this, 1200L, 1200L);
+
+            //添加自定义背包页
+            VexViewAPI.addSideBarPage(new BagPage().getPage());
 
             consoleSender.sendMessage(ChatColor.AQUA + "VexViewBag插件启动完成！");
         } catch (Exception e) {

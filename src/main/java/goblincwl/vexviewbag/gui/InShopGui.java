@@ -31,7 +31,7 @@ import java.util.*;
 public class InShopGui extends VexGui {
     public InShopGui(String ymlName, String emailSender, String emailTitle) {
         super(
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/inShop.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/gui/inShop.png",
                 -1,
                 -1,
                 318,
@@ -56,7 +56,7 @@ public class InShopGui extends VexGui {
 
             //打底图片
             this.addComponent(new VexImage(
-                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/shopItem.png",
+                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/shopItem.png",
                     imgX,
                     imgY,
                     60,
@@ -132,8 +132,8 @@ public class InShopGui extends VexGui {
             VexButton vexBuyBtn = new VexButton(
                     i,
                     "购买",
-                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/buyButton.png",
-                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/buyButton_.png",
+                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/buyButton.png",
+                    "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/buyButton_.png",
                     imgX + 22,
                     imgY + 28,
                     33,
@@ -192,22 +192,22 @@ public class InShopGui extends VexGui {
         switch (moneyType) {
             case "1":
                 //绿宝石
-                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/emerald.png";
+                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/icon/emerald.png";
                 moneyPrefix = "§a";
                 moneyHov = moneyPrefix + "绿宝石";
                 break;
             case "2":
-                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/amethyst.png";
+                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/icon/amethyst.png";
                 moneyPrefix = "§d";
                 moneyHov = moneyPrefix + "紫晶石";
                 break;
             case "3":
-                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/huoyuezhi.png";
+                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/icon/huoyuezhi.png";
                 moneyPrefix = "§6";
                 moneyHov = moneyPrefix + "活跃值";
                 break;
             case "4":
-                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/jingyingfencheng.png";
+                moneyImg = "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/icon/jingyingfencheng.png";
                 moneyPrefix = "§b";
                 moneyHov = moneyPrefix + "精英粉尘";
                 break;

@@ -18,7 +18,7 @@ import java.util.Collections;
 public class ShopGui extends VexGui {
     public ShopGui() {
         super(
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/shop.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/gui/shop.png",
                 -1,
                 -1,
                 304,
@@ -29,8 +29,8 @@ public class ShopGui extends VexGui {
         this.addComponent(new VexButton(
                 "shopMenuEmerald",
                 "",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/emeraldShopBtn.png",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/emeraldShopBtn_.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/emeraldShopBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/emeraldShopBtn_.png",
                 11,
                 11,
                 69,
@@ -43,8 +43,8 @@ public class ShopGui extends VexGui {
         this.addComponent(new VexButton(
                 "shopMenuAmethyst",
                 "",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/amethystShopBtn1.png",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/amethystShopBtn1_.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/amethystShopBtn1.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/amethystShopBtn1_.png",
                 82,
                 11,
                 69,
@@ -57,8 +57,8 @@ public class ShopGui extends VexGui {
         this.addComponent(new VexButton(
                 "shopMenuGlobal",
                 "",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/globalShopBtn.png",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/globalShopBtn_.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/globalShopBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/globalShopBtn_.png",
                 153,
                 11,
                 69,
@@ -72,8 +72,8 @@ public class ShopGui extends VexGui {
         this.addComponent(new VexButton(
                 "shopMenuMystery",
                 "",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/mysteryShopBtn.png",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/mysteryShopBtn_.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/mysteryShopBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/mysteryShopBtn_.png",
                 224,
                 11,
                 69,
@@ -86,8 +86,8 @@ public class ShopGui extends VexGui {
         this.addComponent(new VexButton(
                 "shopMenuRecovery",
                 "",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/recoveryShopBtn.png",
-                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/shopMain/recoveryShopBtn_.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/recoveryShopBtn.png",
+                "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/other/recoveryShopBtn_.png",
                 224,
                 102,
                 69,

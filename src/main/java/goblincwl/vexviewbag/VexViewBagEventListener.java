@@ -3,11 +3,9 @@ package goblincwl.vexviewbag;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import baubles.api.inv.BaublesInventoryWrapper;
-import goblincwl.vexviewbag.gui.BagGui;
 import lain.mods.cos.api.CosArmorAPI;
 import lain.mods.cos.api.inventory.CAStacksBase;
 import lk.vexview.api.VexViewAPI;
-import lk.vexview.event.KeyBoardPressEvent;
 import lk.vexview.event.VexSlotInteractEvent;
 import lk.vexview.gui.VexInventoryGui;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,21 +27,6 @@ import org.bukkit.inventory.PlayerInventory;
 public final class VexViewBagEventListener implements Listener {
 
     int bb = 1;
-
-    @EventHandler
-    public void onKey(KeyBoardPressEvent event) {
-        //按的是E(18) R(19)，并且有GUI打开，并且按键结束（放开，非按住）
-        if (event.getKey() == 19 && event.getEventKeyState()) {
-            if (event.getType().toString().equals("GUI")) {
-                //如果在GUI里
-                //关闭界面
-                event.getPlayer().closeInventory();
-            } else {
-                //打开bag
-                VexViewAPI.openGui(event.getPlayer(), new BagGui(event.getPlayer()));
-            }
-        }
-    }
 
     @EventHandler
     public void onInvSlotClick(VexSlotInteractEvent event) {
@@ -86,70 +69,46 @@ public final class VexViewBagEventListener implements Listener {
 
                 switch (slotId) {
                     case 0:
-                        //校验头盔
-                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "HELMET")) {
-                            event.setCancelled(true);
-                        }
-                        return;
-                    case 1:
-                    case 12:
-                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "CHESTPLATE")) {
-                            event.setCancelled(true);
-                        }
-                        return;
-                    case 2:
-                    case 13:
-                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "LEGGINGS")) {
-                            event.setCancelled(true);
-                        }
-                        return;
-                    case 3:
-                    case 14:
-                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "BOOTS")) {
-                            event.setCancelled(true);
-                        }
-                        return;
-                    case 4:
                         if (!baublesInventoryWrapper.func_94041_b(0, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 5:
+                    case 1:
                         if (!baublesInventoryWrapper.func_94041_b(1, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 6:
+                    case 2:
                         if (!baublesInventoryWrapper.func_94041_b(2, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 7:
+                    case 3:
                         if (!baublesInventoryWrapper.func_94041_b(3, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 8:
+                    case 4:
                         if (!baublesInventoryWrapper.func_94041_b(4, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 9:
+                    case 5:
                         if (!baublesInventoryWrapper.func_94041_b(5, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 10:
+                    case 6:
                         if (!baublesInventoryWrapper.func_94041_b(6, VexViewBagUtils.convertItem(crossItem)) && crossItem != null) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 11:
+                    case 7:
                         if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "HELMET") && !VexViewBagUtils.isMatchType(crossItem, "SKULL") && !VexViewBagUtils.isMatchType(crossItem, "TROPHY")) {
                             event.setCancelled(true);
                         }
                         return;
-                    case 15:
+                    case 11:
                 }
             }
         } else {
@@ -164,38 +123,6 @@ public final class VexViewBagEventListener implements Listener {
 
                 switch (slotId) {
                     case 0:
-                        if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "HELMET")) {
-                            playerInventory.setHelmet(eventItem);
-                        } else {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        break;
-                    case 1:
-                        if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "CHESTPLATE")) {
-                            playerInventory.setChestplate(eventItem);
-                        } else {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        break;
-                    case 2:
-                        if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "LEGGINGS")) {
-                            playerInventory.setLeggings(eventItem);
-                        } else {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        break;
-                    case 3:
-                        if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "BOOTS")) {
-                            playerInventory.setBoots(eventItem);
-                        } else {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        break;
-                    case 4:
                         if (baublesInventoryWrapper.func_94041_b(0, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(0, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -203,7 +130,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 5:
+                    case 1:
                         if (baublesInventoryWrapper.func_94041_b(1, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(1, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -211,7 +138,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 6:
+                    case 2:
                         if (baublesInventoryWrapper.func_94041_b(2, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(2, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -219,7 +146,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 7:
+                    case 3:
                         if (baublesInventoryWrapper.func_94041_b(3, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(3, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -227,7 +154,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 8:
+                    case 4:
                         if (baublesInventoryWrapper.func_94041_b(4, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(4, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -235,7 +162,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 9:
+                    case 5:
                         if (baublesInventoryWrapper.func_94041_b(5, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(5, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -243,7 +170,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 10:
+                    case 6:
                         if (baublesInventoryWrapper.func_94041_b(6, VexViewBagUtils.convertItem(eventItem)) || eventItem == null) {
                             baublesInventoryWrapper.func_70299_a(6, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -251,7 +178,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 11:
+                    case 7:
                         if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "HELMET") || VexViewBagUtils.isMatchType(eventItem, "SKULL") || VexViewBagUtils.isMatchType(eventItem, "TROPHY")) {
                             caStacks.setStackInSlot(3, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -259,7 +186,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 12:
+                    case 8:
                         if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "CHESTPLATE")) {
                             caStacks.setStackInSlot(2, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -267,7 +194,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 13:
+                    case 9:
                         if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "LEGGINGS")) {
                             caStacks.setStackInSlot(1, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -275,7 +202,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 14:
+                    case 10:
                         if (eventItem == null || VexViewBagUtils.isMatchType(eventItem, "BOOTS")) {
                             caStacks.setStackInSlot(0, VexViewBagUtils.convertItem(eventItem));
                         } else {
@@ -283,7 +210,7 @@ public final class VexViewBagEventListener implements Listener {
                             return;
                         }
                         break;
-                    case 15:
+                    case 11:
                         playerInventory.setItemInOffHand(eventItem);
                         break;
                 }

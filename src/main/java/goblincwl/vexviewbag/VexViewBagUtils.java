@@ -107,6 +107,19 @@ public class VexViewBagUtils {
     }
 
     /**
+     * 获取CustomNpcsAPI的Player对象
+     *
+     * @param player bukkitPlayer
+     * @return noppes.npcs.api.entity.IPlayer<net.minecraft.entity.player.EntityPlayerMP>
+     * @create 2020/7/23 14:29
+     * @author ☪wl
+     */
+    public static IPlayer<EntityPlayerMP> getNpcPlayer(Player player) {
+        EntityPlayer entityPlayer = (EntityPlayer) (Object) ((CraftPlayer) player).getHandle();
+        return (IPlayer<EntityPlayerMP>) VexViewBag.npcAPI.getIEntity(entityPlayer);
+    }
+
+    /**
      * 发送特殊消息
      *
      * @param player  玩家
@@ -119,8 +132,7 @@ public class VexViewBagUtils {
      */
     public static void sendMcMessage(Player player, String title, String message, Integer type) {
         if (player != null) {
-            EntityPlayer entityPlayer = (EntityPlayer) (Object) ((CraftPlayer) player).getHandle();
-            IPlayer<EntityPlayerMP> iPlayer = (IPlayer<EntityPlayerMP>) VexViewBag.npcAPI.getIEntity(entityPlayer);
+            IPlayer<EntityPlayerMP> iPlayer = getNpcPlayer(player);
             iPlayer.sendNotification(title, message, type);
         }
     }
