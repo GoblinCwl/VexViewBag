@@ -108,6 +108,21 @@ public final class VexViewBagEventListener implements Listener {
                             event.setCancelled(true);
                         }
                         return;
+                    case 8:
+                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "CHESTPLATE")) {
+                            event.setCancelled(true);
+                        }
+                        return;
+                    case 9:
+                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "LEGGINGS")) {
+                            event.setCancelled(true);
+                        }
+                        return;
+                    case 10:
+                        if (crossItem != null && !VexViewBagUtils.isMatchType(crossItem, "BOOTS")) {
+                            event.setCancelled(true);
+                        }
+                        return;
                     case 11:
                 }
             }

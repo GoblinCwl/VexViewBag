@@ -104,7 +104,7 @@ public class BagPage {
 
         //活跃
         this.buttonList.add(new VexButton(
-                "activeBtn",
+                "_activeBtn1_",
                 "",
                 "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/infoBtn.png",
                 "https://dragonstwilight.oss-cn-beijing.aliyuncs.com/VexViewPic/button/infoBtn_.png",
