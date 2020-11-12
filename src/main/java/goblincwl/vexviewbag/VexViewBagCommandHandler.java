@@ -67,6 +67,9 @@ public class VexViewBagCommandHandler implements CommandExecutor {
                             break;
                         case "addActivePoint":
                             return addActivePoint(args, sender);
+                        case "inv":
+                            player.openInventory(player.getInventory());
+                            break;
                         default:
                             return false;
                     }
